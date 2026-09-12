@@ -25,10 +25,6 @@ public class AccountValidationController {
 
         String result = accountValidationService.validateAccount(request);
 
-        if (result.startsWith("Invalid")) {
-            return ResponseEntity.badRequest().body(result);
-        }
-
         return ResponseEntity.ok(result);
     }
 }

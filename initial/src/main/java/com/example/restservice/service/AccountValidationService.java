@@ -9,15 +9,31 @@ public class AccountValidationService {
 
     public String validateAccount(AccountValidationRequest request){
 
-        if (request.getAccountNumber() == null ||
-                request.getAccountNumber().isEmpty()) {
+        String accountNumber = request.getAccountNumber();
+        String ifscCode = request.getIfscCode();
 
-            throw new InvalidAccountException("Account number is required");
+        if (accountNumber == null || accountNumber.isEmpty()) {
+            throw new InvalidAccountException(
+                    "Account number is required"
+            );
         }
 
-        if (request.getIfscCode() == null || request.getIfscCode().isEmpty()) {
+        if (!accountNumber.matches("\\d{10,12}")) {
+            throw new InvalidAccountException(
+                    "Account number must contain 10 to 12 digits"
+            );
+        }
 
-            throw new InvalidAccountException("IFSC code is required");
+        if (ifscCode == null || ifscCode.isEmpty()) {
+            throw new InvalidAccountException(
+                    "IFSC code is required"
+            );
+        }
+
+        if (!ifscCode.equals("HDFC0001234")) {
+            throw new InvalidAccountException(
+                    "Invalid IFSC code"
+            );
         }
         return  "Account Details are valid";
 
